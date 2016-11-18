@@ -19,7 +19,7 @@ app.get('/', function (request, response) {
 });
 
 app.get('/getSound', function (req, res) {
-    var Song = new SoundRain("https://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", './mp3');
+    var Song = new soundrain("https://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", './mp3');
     Song.on('error', function (err) {
         if (err) throw err;
     }).on('done', function (file) {
