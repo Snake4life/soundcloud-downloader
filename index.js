@@ -4,6 +4,7 @@ var http = require('http');
 var fs = require('fs');
 var soundrain = require('soundrain');
 var metaEdit = require('ffmetadata');
+var exec = require('child_process').exec;
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
@@ -19,7 +20,18 @@ app.get('/', function (request, response) {
 });
 
 app.get('/getSound', function (req, res) {
-    var Song = new soundrain("http://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", './mp3');
+    var cmd = "youtube-dl.exe http://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release";
+    exec(cmd, function (error, stdout, stderr) {
+        console.log(stdout);
+        const testFolder = './';
+        const fs = require('fs');
+        fs.readdir(testFolder, (err, files) => {
+            files.forEach(file => {
+                console.log(file);
+            });
+        });
+    });
+    /*var Song = new soundrain("http://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", './mp3');
     Song.on('error', function (err) {
         console.log("ERRORROR");
         if (err) throw err;
@@ -40,6 +52,7 @@ app.get('/getSound', function (req, res) {
             });
         });
     });
+    */
 
 
 
