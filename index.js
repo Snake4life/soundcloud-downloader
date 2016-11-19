@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require('request');
+var path = require('path');
 var http = require('http');
 var fs = require('fs');
 var soundrain = require('soundrain');
@@ -20,9 +21,13 @@ app.get('/', function (request, response) {
 });
 
 app.get('/getSound', function (req, res) {
-    exec('youtube-dl.exe', function (err, data) {
-        console.log(err)
-        console.log(data.toString());
+    var exePath = path.resolve(__dirname, './youtube-dl.exe');
+    exec(exePath, function (error, stderr) {
+        console.log('stderr: ', __dirname);
+        if (error !== null) {
+            console.log('exec error: ', error);
+        }
+        
         const testFolder = './';
         const fs = require('fs');
         fs.readdir(testFolder, (err, files) => {
