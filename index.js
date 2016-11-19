@@ -23,17 +23,25 @@ app.get('/getSound', function (req, res) {
     Song.on('error', function (err) {
         console.log("ERRORROR");
         if (err) throw err;
+        const testFolder = './mp3';
+        const fs = require('fs');
+        fs.readdir(testFolder, (err, files) => {
+            files.forEach(file => {
+                console.log(file);
+            });
+        });
     }).on('done', function (file) {
         console.log(file);
+        const testFolder = './mp3';
+        const fs = require('fs');
+        fs.readdir(testFolder, (err, files) => {
+            files.forEach(file => {
+                console.log(file);
+            });
+        });
     });
 
-    const testFolder = './mp3';
-    const fs = require('fs');
-    fs.readdir(testFolder, (err, files) => {
-        files.forEach(file => {
-            console.log(file);
-        });
-    })
+
 
     /*
     ffmetadata.read("song.mp3", function (err, data) {
