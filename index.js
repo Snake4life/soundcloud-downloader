@@ -22,12 +22,12 @@ app.get('/', function (request, response) {
 
 app.get('/getSound', function (req, res) {
     var exePath = path.resolve(__dirname, './youtube-dl.exe');
-    exec(exePath, function (error, stderr) {
-        console.log('stderr: ', __dirname);
-        if (error !== null) {
-            console.log('exec error: ', error);
+    exec(exePath, ["http://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release"], function (error, stdout, stderr) {
+        if (error) {
+            throw error;
         }
-        
+        console.log(stdout);
+
         const testFolder = './';
         const fs = require('fs');
         fs.readdir(testFolder, (err, files) => {
