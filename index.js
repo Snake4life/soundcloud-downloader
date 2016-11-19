@@ -19,12 +19,21 @@ app.get('/', function (request, response) {
 });
 
 app.get('/getSound', function (req, res) {
-    var Song = new soundrain("https://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", '/mp3');
+    var Song = new soundrain("https://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", './mp3');
     Song.on('error', function (err) {
+        console.log("ERRORROR");
         if (err) throw err;
     }).on('done', function (file) {
         console.log(file);
     });
+
+    const testFolder = './mp3';
+    const fs = require('fs');
+    fs.readdir(testFolder, (err, files) => {
+        files.forEach(file => {
+            console.log(file);
+        });
+    })
 
     /*
     ffmetadata.read("song.mp3", function (err, data) {
