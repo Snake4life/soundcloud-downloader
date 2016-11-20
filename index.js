@@ -21,10 +21,11 @@ app.get('/', function (request, response) {
 });
 
 app.get('/getSound', function (req, res) {
-    var exePath = path.resolve(__dirname, './youtube--dl.exe');
+    var exePath = path.resolve(__dirname, './youtube-dl.exe');
     console.log("path: " + exePath);
-    fs.chmodSync('youtube--dl.exe', 0777);
+    fs.chmodSync('youtube-dl.exe', 0777);
     exec(exePath, [], function (error, stdout, stderr) {
+        console.log(stdout);
         if (error) {
             throw error;
         }
