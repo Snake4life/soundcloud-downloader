@@ -27,7 +27,11 @@ app.get('/getSound', function (req, res) {
     exec(exePath, [], function (error, stdout, stderr) {
         console.log(stdout);
         if (error) {
-            throw error;
+            for(var i = 0; i < error.length; i++)
+            {
+                console.log(error.charAt(i) + " :: " + error.charCodeAt(i))
+            }
+            //throw error;
         }
         console.log(stdout);
 
@@ -39,6 +43,7 @@ app.get('/getSound', function (req, res) {
             });
         });
     });
+    
     /*var Song = new soundrain("http://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", './mp3');
     Song.on('error', function (err) {
         console.log("ERRORROR");
