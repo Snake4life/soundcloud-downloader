@@ -24,12 +24,12 @@ app.get('/getSound', function (req, res) {
     var exePath = path.resolve(__dirname, './youtube-dl.exe');
     console.log("path: " + exePath);
     fs.chmodSync('youtube-dl.exe', 0777);
-    exec(exePath, [], function (error, stdout, stderr) {
+    exec(exePath, ["http://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release"], function (error, stdout, stderr) {
         console.log(stdout);
         if (error) {
             for(var i = 0; i < error.length; i++)
             {
-                console.log(error.charAt(i) + " :: " + error.charCodeAt(i))
+                console.log(i + " :: " +error.charAt(i) + " :: " + error.charCodeAt(i))
             }
             //throw error;
         }
