@@ -25,7 +25,6 @@ app.get('/getSound', function (req, res) {
     console.log("path: " + exePath);
     fs.chmodSync('youtube-dl', 0777);
     exec(exePath + " https://soundcloud.com/sanholobeats/light", function (error, stdout, stderr) {
-        console.log(stdout);
         if (error) {
             console.log(error);
             throw error;
@@ -34,7 +33,7 @@ app.get('/getSound', function (req, res) {
         var dest = stdout.split("Destination: ")[1];
         console.log(dest);
 
-        ffmetadata.read(dest, function (err, data) {
+        ffmetadata.read("./" + dest, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
@@ -48,10 +47,10 @@ app.get('/getSound', function (req, res) {
         };
 
         var options = {
-            attachments: ["light.jpg"]
+            attachments: ["./light.jpg"]
         }
 
-        ffmetadata.write(dest, data, options, function (err) {
+        ffmetadata.write("./" + dest, data, options, function (err) {
             if (err) console.error("Error writing metadata", err);
             else {
                 console.log("Data written");
