@@ -30,10 +30,10 @@ app.get('/getSound', function (req, res) {
             throw error;
         }
         console.log(stdout);
-        var dest = stdout.split("Destination: ")[1];
+        var dest = __dirname + '/' + stdout.split("Destination: ")[1];
         console.log(dest);
 
-        ffmetadata.read("./" + dest, function (err, data) {
+        ffmetadata.read(dest, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
@@ -50,12 +50,11 @@ app.get('/getSound', function (req, res) {
             attachments: ["./light.jpg"]
         }
 
-        ffmetadata.write("./" + dest, data, options, function (err) {
+        ffmetadata.write(dest, data, options, function (err) {
             if (err) console.error("Error writing metadata", err);
             else {
                 console.log("Data written");
-                var file = __dirname + '/' + dest;
-                res.download(file);
+                res.download(dest);
             }
         });
 
