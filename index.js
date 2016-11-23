@@ -4,7 +4,7 @@ var path = require('path');
 var http = require('http');
 var fs = require('fs');
 var soundrain = require('soundrain');
-var metaEdit = require('ffmetadata');
+var ffmetadata = require('ffmetadata');
 var exec = require('child_process').exec;
 var app = express();
 
