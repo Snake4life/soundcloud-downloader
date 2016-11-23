@@ -30,7 +30,7 @@ app.get('/getSound', function (req, res) {
             throw error;
         }
         console.log(stdout);
-        var dest = __dirname + '/' + stdout.split("Destination: ")[1];
+        var dest = stdout.split("Destination: ")[1];
         console.log(dest);
 
         ffmetadata.read(dest, function (err, data) {
@@ -38,7 +38,6 @@ app.get('/getSound', function (req, res) {
             else console.log(data);
         });
 
-        // Set the artist for song.mp3 
         var data = {
             artist: "San Holo",
             title: "Light",
@@ -46,15 +45,18 @@ app.get('/getSound', function (req, res) {
             genre: "Future Bass"
         };
 
+        /*
         var options = {
             attachments: ["./light.jpg"]
         }
+        */
 
-        ffmetadata.write(dest, data, options, function (err) {
+        ffmetadata.write(dest, data, function (err) {
             if (err) console.error("Error writing metadata", err);
             else {
                 console.log("Data written");
-                res.download(dest);
+                var file = __dirname + '/' + dest;
+                res.download(file);
             }
         });
 
