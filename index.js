@@ -31,9 +31,11 @@ app.get('/getSound', function (req, res) {
         }
         console.log(stdout);
         var dest = stdout.split("Destination: ")[1];
-        console.log(dest);
+        console.log("dest: " + dest + "<<");
+        var other = dest.replace(dest.split(".mp3")[1], "");
+        console.log("other: " + other + "<<");
 
-        ffmetadata.read(dest, function (err, data) {
+        ffmetadata.read(other, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
@@ -51,11 +53,11 @@ app.get('/getSound', function (req, res) {
         }
         */
 
-        ffmetadata.write(dest, data, function (err) {
+        ffmetadata.write(other, data, function (err) {
             if (err) console.error("Error writing metadata", err);
             else {
                 console.log("Data written");
-                var file = __dirname + '/' + dest;
+                var file = __dirname + '/' + other;
                 res.download(file);
             }
         });
