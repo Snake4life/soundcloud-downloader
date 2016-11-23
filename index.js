@@ -35,7 +35,7 @@ app.get('/getSound', function (req, res) {
         var other = dest.replace(dest.split(".mp3")[1], "");
         console.log("other: " + other + "<<");
 
-        ffmetadata.read(other, function (err, data) {
+        ffmetadata.read("./" + other, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
@@ -53,7 +53,7 @@ app.get('/getSound', function (req, res) {
         }
         */
 
-        ffmetadata.write(other, data, function (err) {
+        ffmetadata.write(__dirname + "/" + other, data, function (err) {
             if (err) console.error("Error writing metadata", err);
             else {
                 console.log("Data written");
