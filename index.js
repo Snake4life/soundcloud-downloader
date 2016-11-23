@@ -36,32 +36,36 @@ app.get('/getSound', function (req, res) {
         console.log("other: " + other + "<<");
         other = "3005.mp3";
 
-        ffmetadata.read(other, function (err, data) {
+        var options = {
+            'idv2.3': true
+        }
+
+        ffmetadata.read(other, options, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
-        
-        ffmetadata.read("/" + other, function (err, data) {
+
+        ffmetadata.read("/" + other, options, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
-        
-        ffmetadata.read("./" + other, function (err, data) {
+
+        ffmetadata.read("./" + other, options, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
-        
-        ffmetadata.read("../" + other, function (err, data) {
+
+        ffmetadata.read("../" + other, options, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
-        
-        ffmetadata.read("../../" + other, function (err, data) {
+
+        ffmetadata.read("../../" + other, options, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
-        
-        ffmetadata.read(__dirname + "/" + other, function (err, data) {
+
+        ffmetadata.read(__dirname + "/" + other, options, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
