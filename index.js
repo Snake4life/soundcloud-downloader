@@ -24,23 +24,44 @@ app.get('/getSound', function (req, res) {
     var exePath = path.resolve(__dirname, './youtube-dl');
     console.log("path: " + exePath);
     fs.chmodSync('youtube-dl', 0777);
-    exec(exePath + " http://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", function (error, stdout, stderr) {
+    exec(exePath + " https://soundcloud.com/sanholobeats/light", function (error, stdout, stderr) {
         console.log(stdout);
         if (error) {
             console.log(error);
             throw error;
         }
         console.log(stdout);
+        var dest = stdout.split("Destination: ")[1];
+        console.log(dest);
 
-        const testFolder = './';
-        const fs = require('fs');
-        fs.readdir(testFolder, (err, files) => {
-            files.forEach(file => {
-                console.log(file);
-            });
+        ffmetadata.read(dest, function (err, data) {
+            if (err) console.error("Error reading metadata", err);
+            else console.log(data);
         });
+
+        // Set the artist for song.mp3 
+        var data = {
+            artist: "San Holo",
+            title: "Light",
+            album: "Light",
+            genre: "Future Bass"
+        };
+
+        var options = {
+            attachments: ["light.jpg"]
+        }
+
+        ffmetadata.write(dest, data, options, function (err) {
+            if (err) console.error("Error writing metadata", err);
+            else {
+                console.log("Data written");
+                var file = __dirname + '/' + dest;
+                res.download(file);
+            }
+        });
+
     });
-    
+
     /*var Song = new soundrain("http://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", './mp3');
     Song.on('error', function (err) {
         console.log("ERRORROR");
