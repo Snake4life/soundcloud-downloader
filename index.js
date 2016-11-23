@@ -34,6 +34,7 @@ app.get('/getSound', function (req, res) {
         console.log("dest: " + dest + "<<");
         var other = dest.replace(dest.split(".mp3")[1], "");
         console.log("other: " + other + "<<");
+        other = "3005.mp3";
 
         ffmetadata.read(other, function (err, data) {
             if (err) console.error("Error reading metadata", err);
@@ -51,6 +52,11 @@ app.get('/getSound', function (req, res) {
         });
         
         ffmetadata.read("../" + other, function (err, data) {
+            if (err) console.error("Error reading metadata", err);
+            else console.log(data);
+        });
+        
+        ffmetadata.read("../../" + other, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
