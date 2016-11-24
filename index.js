@@ -3,8 +3,8 @@ var request = require('request');
 var path = require('path');
 var http = require('http');
 var fs = require('fs');
+var ID3Writer = require('browser-id3-writer');
 var soundrain = require('soundrain');
-var ffmetadata = require('ffmetadata');
 var exec = require('child_process').exec;
 var app = express();
 
@@ -34,107 +34,24 @@ app.get('/getSound', function (req, res) {
         console.log("dest: " + dest + "<<");
         var other = dest.replace(dest.split(".mp3")[1], "");
         console.log("other: " + other + "<<");
-        other = "3005.mp3";
 
-        var options = {
-            'idv2.3': true
-        }
+        var songBuffer = fs.readFileSync(__dirname + "/" + other);
+        var coverBuffer = fs.readFileSync(__dirname + "/light.jpg");
 
-        ffmetadata.read(other, options, function (err, data) {
-            if (err) console.error("Error reading metadata", err);
-            else console.log(data);
-        });
+        var writer = new ID3Writer(songBuffer);
+        writer.setFrame('TIT2', 'Light')
+            .setFrame('TPE1', ['San Holo'])
+            .setFrame('TALB', 'Light')
+            .setFrame('TCON', ['Future Bass'])
+            .setFrame('APIC', coverBuffer);
+        writer.addTag();
 
-        ffmetadata.read("/" + other, options, function (err, data) {
-            if (err) console.error("Error reading metadata", err);
-            else console.log(data);
-        });
-
-        ffmetadata.read("./" + other, options, function (err, data) {
-            if (err) console.error("Error reading metadata", err);
-            else console.log(data);
-        });
-
-        ffmetadata.read("../" + other, options, function (err, data) {
-            if (err) console.error("Error reading metadata", err);
-            else console.log(data);
-        });
-
-        ffmetadata.read("/light.jpg", options, function (err, data) {
-            if (err) console.error("Error reading metadata", err);
-            else console.log(data);
-        });
-
-        ffmetadata.read(__dirname + "/" + other, options, function (err, data) {
-            if (err) console.error("Error reading metadata", err);
-            else console.log(data);
-        });
-
-        var data = {
-            artist: "San Holo",
-            title: "Light",
-            album: "Light",
-            genre: "Future Bass"
-        };
-
-        /*
-        var options = {
-            attachments: ["./light.jpg"]
-        }
-        */
-
-        ffmetadata.write(__dirname + "/" + other, data, function (err) {
-            if (err) console.error("Error writing metadata", err);
-            else {
-                console.log("Data written");
-                var file = __dirname + '/' + other;
-                res.download(file);
-            }
-        });
-
+        var taggedSongBuffer = new Buffer(writer.arrayBuffer);
+        fs.writeFileSync('San Holo - Light.mp3', taggedSongBuffer);
+        
+        var file = __dirname + '/San Holo - Light.mp3';
+        res.download(file);
     });
-
-    /*var Song = new soundrain("http://soundcloud.com/nocopyrightsounds/geoxor-you-i-ncs-release", './mp3');
-    Song.on('error', function (err) {
-        console.log("ERRORROR");
-        if (err) throw err;
-        const testFolder = './mp3';
-        const fs = require('fs');
-        fs.readdir(testFolder, (err, files) => {
-            files.forEach(file => {
-                console.log(file);
-            });
-        });
-    }).on('done', function (file) {
-        console.log(file);
-        const testFolder = './mp3';
-        const fs = require('fs');
-        fs.readdir(testFolder, (err, files) => {
-            files.forEach(file => {
-                console.log(file);
-            });
-        });
-    });
-    */
-
-
-
-    /*
-    ffmetadata.read("song.mp3", function (err, data) {
-        if (err) console.error("Error reading metadata", err);
-        else console.log(data);
-    });
-
-    // Set the artist for song.mp3 
-    var data = {
-        artist: "Me",
-    };
-    ffmetadata.write("song.mp3", data, function (err) {
-        if (err) console.error("Error writing metadata", err);
-        else console.log("Data written");
-    });
-    */
-
 });
 
 app.listen(app.get('port'), function () {
