@@ -60,7 +60,7 @@ app.get('/getSound', function (req, res) {
             else console.log(data);
         });
 
-        ffmetadata.read("../../" + other, options, function (err, data) {
+        ffmetadata.read("/light.jpg", options, function (err, data) {
             if (err) console.error("Error reading metadata", err);
             else console.log(data);
         });
