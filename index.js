@@ -11,15 +11,6 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
-// views is directory for all template files
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-
-app.get('/', function (request, response) {
-    console.log("Welcome to homepage");
-    response.render('pages/index');
-});
-
 app.get('/getSound', function (req, res) {
     var query = require('url').parse(req.url, true).query;
     var link = query.link;
@@ -32,6 +23,7 @@ app.get('/getSound', function (req, res) {
     var exePath = path.resolve(__dirname, './youtube-dl');
     console.log("path: " + exePath);
     fs.chmodSync('youtube-dl', 0777);
+    
     exec(exePath + " " + link, function (error, stdout, stderr) {
         if (error) {
             console.log(error);
@@ -69,8 +61,6 @@ app.get('/getSound', function (req, res) {
             },
         };
         image_downloader(options);
-
-        console.log("!");
     });
 });
 
