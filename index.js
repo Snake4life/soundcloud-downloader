@@ -38,7 +38,8 @@ app.get('/getSound', function (req, res) {
             throw error;
         }
         console.log(stdout);
-        var dest = stdout.split("Destination: ")[1].replace(dest.split(".mp3")[1], "");
+        var dest = stdout.split("Destination: ")[1];
+        dest = dest.replace(dest.split(".mp3")[1], "");
 
         var songBuffer = fs.readFileSync(__dirname + "/" + dest);
         var coverBuffer = fs.readFileSync(album_art);
