@@ -42,7 +42,7 @@ app.get('/getSound', function (req, res) {
         dest = dest.replace(dest.split(".mp3")[1], "");
 
         var songBuffer = fs.readFileSync(__dirname + "/" + dest);
-        var coverBuffer = fs.readFileSync(album_art);
+        var coverBuffer = album_art;
 
         var writer = new ID3Writer(songBuffer);
         writer.setFrame('TIT2', title)
