@@ -39,7 +39,7 @@ app.get('/getSound', function (req, res) {
         }
         console.log(stdout);
         var song_dest = stdout.split("Destination: ")[1];
-        song_dest = dest.replace(dest.split(".mp3")[1], "");
+        song_dest = song_dest.replace(song_dest.split(".mp3")[1], "");
 
         options = {
             url: album_art,
