@@ -38,8 +38,9 @@ app.get('/getSound', function (req, res) {
             throw error;
         }
         console.log(stdout);
-        var song_dest = stdout.split("Destination: ")[1];
-        song_dest = song_dest.replace(song_dest.split(".mp3")[1], "");
+        
+        var dest = stdout.split("Destination: ")[1];
+        dest = dest.replace(dest.split(".mp3")[1], "");
 
         options = {
             url: album_art,
@@ -48,10 +49,8 @@ app.get('/getSound', function (req, res) {
                 if (err) {
                     throw err;
                 }
-                console.log('File saved to', filename);
-                var fname = __dirname + "/" + song_dest;
-                console.log(fname);
-                var songBuffer = fs.readFileSync(fname);
+                console.log('Album cover saved to', filename);
+                var songBuffer = fs.readFileSync(__dirname + "/" + dest);
                 var coverBuffer = fs.readFileSync(__dirname + "/album_art.jpg");
 
                 var writer = new ID3Writer(songBuffer);
@@ -65,7 +64,7 @@ app.get('/getSound', function (req, res) {
                 var taggedSongBuffer = new Buffer(writer.arrayBuffer);
                 fs.writeFileSync(artist + " - " + title + '.mp3', taggedSongBuffer);
 
-                var file = __dirname + artist + " - " + title + '.mp3';
+                var file = __dirname + "/" + artist + " - " + title + '.mp3';
                 res.download(file);
             },
         };
