@@ -49,7 +49,8 @@ app.get('/getSound', function (req, res) {
                     throw err;
                 }
                 console.log('File saved to', filename);
-                var songBuffer = fs.readFileSync(__dirname + "/" + dest);
+                
+                var songBuffer = fs.readFileSync(__dirname + "/////////" + dest);
                 var coverBuffer = fs.readFileSync(__dirname + "/album_art.jpg");
 
                 var writer = new ID3Writer(songBuffer);
