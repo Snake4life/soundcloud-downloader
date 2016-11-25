@@ -4,7 +4,7 @@ var path = require('path');
 var http = require('http');
 var fs = require('fs');
 var ID3Writer = require('browser-id3-writer');
-var soundrain = require('soundrain');
+var image_downloader = require('image-downloader');
 var exec = require('child_process').exec;
 var app = express();
 
@@ -28,7 +28,7 @@ app.get('/getSound', function (req, res) {
     var genre = query.genre;
     var album = query.album;
     var album_art = query.album_art;
-    
+
     var exePath = path.resolve(__dirname, './youtube-dl');
     console.log("path: " + exePath);
     fs.chmodSync('youtube-dl', 0777);
@@ -41,8 +41,16 @@ app.get('/getSound', function (req, res) {
         var dest = stdout.split("Destination: ")[1];
         dest = dest.replace(dest.split(".mp3")[1], "");
 
+        image_downloader([album_art], '/', function (err, filename, image) {
+            if (err) {
+                throw err;
+            }
+            console.log('File saved to', filename);
+            album_art = filename;
+        });
+
         var songBuffer = fs.readFileSync(__dirname + "/" + dest);
-        var coverBuffer = album_art;
+        var coverBuffer = fs.readFileSync(__dirname + "/" + album_art);
 
         var writer = new ID3Writer(songBuffer);
         writer.setFrame('TIT2', title)
@@ -54,7 +62,7 @@ app.get('/getSound', function (req, res) {
 
         var taggedSongBuffer = new Buffer(writer.arrayBuffer);
         fs.writeFileSync(artist + " - " + title + '.mp3', taggedSongBuffer);
-        
+
         var file = __dirname + artist + " - " + title + '.mp3';
         res.download(file);
     });

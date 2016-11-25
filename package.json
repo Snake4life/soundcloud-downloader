@@ -13,7 +13,8 @@
     "body-parser": "^1.15.2",
     "browser-id3-writer": "^2.3.1",
     "ejs": "2.4.1",
-    "express": "4.13.3"
+    "express": "4.13.3",
+    "image-downloader": "^2.0.0"
   },
   "repository": {
     "type": "git",
