@@ -43,13 +43,13 @@ app.get('/getSound', function (req, res) {
 
         options = {
             url: album_art,
-            dest: './album_art.jpg',
+            dest: __dirname + "/album_art.jpg",
             done: function (err, filename, image) {
                 if (err) {
                     throw err;
                 }
                 console.log('File saved to', filename);
-                editMetadata(title, artist, album, genre, album_art);
+                editMetadata(dest, title, artist, album, genre, album_art);
             },
         };
         image_downloader(options);
@@ -58,9 +58,9 @@ app.get('/getSound', function (req, res) {
     });
 });
 
-function editMetadata(title, artist, album, genre, album_art) {
+function editMetadata(dest, title, artist, album, genre, album_art) {
     var songBuffer = fs.readFileSync(__dirname + "/" + dest);
-    var coverBuffer = fs.readFileSync(__dirname + "/" + album_art);
+    var coverBuffer = fs.readFileSync(__dirname + "/album_art.jpg");
 
     var writer = new ID3Writer(songBuffer);
     writer.setFrame('TIT2', title)
