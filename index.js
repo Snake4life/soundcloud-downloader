@@ -38,8 +38,8 @@ app.get('/getSound', function (req, res) {
             throw error;
         }
         console.log(stdout);
-        var dest = stdout.split("Destination: ")[1];
-        dest = dest.replace(dest.split(".mp3")[1], "");
+        var song_dest = stdout.split("Destination: ")[1];
+        song_dest = dest.replace(dest.split(".mp3")[1], "");
 
         options = {
             url: album_art,
@@ -50,7 +50,7 @@ app.get('/getSound', function (req, res) {
                 }
                 console.log('File saved to', filename);
                 
-                var songBuffer = fs.readFileSync(dest);
+                var songBuffer = fs.readFileSync(__dirname + "/" + song_dest);
                 var coverBuffer = fs.readFileSync(__dirname + "/album_art.jpg");
 
                 var writer = new ID3Writer(songBuffer);
