@@ -41,7 +41,7 @@ app.get('/getSound', function (req, res) {
         var dest = stdout.split("Destination: ")[1];
         dest = dest.replace(dest.split(".mp3")[1], "");
 
-        image_downloader([album_art], '/', function (err, filename, image) {
+        image_downloader([album_art], './', function (err, filename, image) {
             if (err) {
                 throw err;
             }
