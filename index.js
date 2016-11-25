@@ -49,27 +49,33 @@ app.get('/getSound', function (req, res) {
                     throw err;
                 }
                 console.log('File saved to', filename);
-                var songBuffer = fs.readFileSync(__dirname + "/" + dest);
-                var coverBuffer = fs.readFileSync(filename);
-
-                var writer = new ID3Writer(songBuffer);
-                writer.setFrame('TIT2', title)
-                    .setFrame('TPE1', [artist])
-                    .setFrame('TALB', album)
-                    .setFrame('TCON', [genre])
-                    .setFrame('APIC', coverBuffer);
-                writer.addTag();
-
-                var taggedSongBuffer = new Buffer(writer.arrayBuffer);
-                fs.writeFileSync(artist + " - " + title + '.mp3', taggedSongBuffer);
-
-                var file = __dirname + artist + " - " + title + '.mp3';
-                res.download(file);
+                editMetadata(title, artist, album, genre, album_art);
             },
         };
         image_downloader(options);
+
+
     });
 });
+
+function editMetadata(title, artist, album, genre, album_art) {
+    var songBuffer = fs.readFileSync(__dirname + "/" + dest);
+    var coverBuffer = fs.readFileSync(__dirname + "/" + album_art);
+
+    var writer = new ID3Writer(songBuffer);
+    writer.setFrame('TIT2', title)
+        .setFrame('TPE1', [artist])
+        .setFrame('TALB', album)
+        .setFrame('TCON', [genre])
+        .setFrame('APIC', coverBuffer);
+    writer.addTag();
+
+    var taggedSongBuffer = new Buffer(writer.arrayBuffer);
+    fs.writeFileSync(artist + " - " + title + '.mp3', taggedSongBuffer);
+
+    var file = __dirname + artist + " - " + title + '.mp3';
+    res.download(file);
+}
 
 /*
 array of strings:
