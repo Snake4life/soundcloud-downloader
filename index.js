@@ -50,7 +50,7 @@ app.get('/getSound', function (req, res) {
                 }
                 console.log('File saved to', filename);
                 
-                /*var songBuffer = fs.readFileSync(__dirname + "/" + song_dest);
+                var songBuffer = fs.readFileSync(__dirname + "/" + song_dest);
                 var coverBuffer = fs.readFileSync(__dirname + "/album_art.jpg");
 
                 var writer = new ID3Writer(songBuffer);
@@ -66,7 +66,6 @@ app.get('/getSound', function (req, res) {
 
                 var file = __dirname + artist + " - " + title + '.mp3';
                 res.download(file);
-                */
             },
         };
         image_downloader(options);
