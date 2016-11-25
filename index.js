@@ -41,13 +41,18 @@ app.get('/getSound', function (req, res) {
         var dest = stdout.split("Destination: ")[1];
         dest = dest.replace(dest.split(".mp3")[1], "");
 
-        image_downloader([album_art], './', function (err, filename, image) {
-            if (err) {
-                throw err;
-            }
-            console.log('File saved to', filename);
-            album_art = filename;
-        });
+        options = {
+            url: album_art,
+            dest: './album_art.jpg',
+            done: function (err, filename, image) {
+                if (err) {
+                    throw err;
+                }
+                console.log('File saved to', filename);
+                album_art = filename;
+            },
+        };
+        image_downloader(options);
 
         var songBuffer = fs.readFileSync(__dirname + "/" + dest);
         var coverBuffer = fs.readFileSync(__dirname + "/" + album_art);
