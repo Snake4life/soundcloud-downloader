@@ -95,14 +95,14 @@ app.get('/password', function (req, res) {
     var query = require('url').parse(req.url, true).query;
     var pass = query.password;
     console.log(pass);
-    if(pass == "divineinformation"){
-        console.log("True");
-        res.send("True");
-    }
-    else{
-        console.log("False");
-        res.send("False");
-    }
+
+    var result = pass == "divineinformation";
+    console.log(result);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+        result: result
+    }, null, 3));
 });
 
 app.listen(app.get('port'), function () {
