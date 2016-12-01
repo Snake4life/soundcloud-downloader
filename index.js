@@ -98,7 +98,8 @@ app.get('/password', function (req, res) {
 
     var result = pass == "divineinformation";
     console.log(result);
-
+    
+    res.setHeader('Access-Control-Allow-Origin', 'https://revengex-benjoha123.c9users.io');
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({
         result: result
