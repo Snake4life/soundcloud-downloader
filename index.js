@@ -91,6 +91,19 @@ arrayBuffer
 APIC (song cover): works with jpeg, png, gif, webp, tiff, bmp and ico
 */
 
+app.use(function(req, res, next) {
+  var allowedOrigins = ['https://revengex-benjoha123.c9users.io', 'http://revengexstorm.com', 'http://www.revengexstorm.com'];
+  var origin = req.headers.origin;
+  if(allowedOrigins.indexOf(origin) > -1){
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  return next();
+});
+
 app.get('/password', function (req, res) {
     var query = require('url').parse(req.url, true).query;
     var pass = query.password;
@@ -98,10 +111,7 @@ app.get('/password', function (req, res) {
 
     var result = pass == "divineinformation";
     console.log(result);
-    
-    res.setHeader('Access-Control-Allow-Origin', 'https://revengex-benjoha123.c9users.io');
-    res.setHeader('Access-Control-Allow-Origin', 'http://revengexstorm.com');
-    res.setHeader('Access-Control-Allow-Origin', 'http://www.revengexstorm.com');
+
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({
         result: result
