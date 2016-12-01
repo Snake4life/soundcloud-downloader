@@ -95,7 +95,7 @@ app.get('/password', function (req, res) {
     var query = require('url').parse(req.url, true).query;
     var pass = query.password;
     console.log(pass);
-    if(pass == "divineintervention"){
+    if(pass == "divineinformation"){
         console.log("True");
         res.send("True");
     }
