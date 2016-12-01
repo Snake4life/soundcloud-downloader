@@ -101,6 +101,7 @@ app.get('/password', function (req, res) {
     
     res.setHeader('Access-Control-Allow-Origin', 'https://revengex-benjoha123.c9users.io');
     res.setHeader('Access-Control-Allow-Origin', 'http://revengexstorm.com');
+    res.setHeader('Access-Control-Allow-Origin', 'http://www.revengexstorm.com');
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({
         result: result
