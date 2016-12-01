@@ -23,14 +23,14 @@ app.get('/getSound', function (req, res) {
     var exePath = path.resolve(__dirname, './youtube-dl');
     console.log("path: " + exePath);
     fs.chmodSync('youtube-dl', 0777);
-    
+
     exec(exePath + " " + link, function (error, stdout, stderr) {
         if (error) {
             console.log(error);
             throw error;
         }
         console.log(stdout);
-        
+
         var dest = stdout.split("Destination: ")[1];
         dest = dest.replace(dest.split(".mp3")[1], "");
 
@@ -90,6 +90,20 @@ arrayBuffer
 
 APIC (song cover): works with jpeg, png, gif, webp, tiff, bmp and ico
 */
+
+app.get('/password', function (req, res) {
+    var query = require('url').parse(req.url, true).query;
+    var pass = query.password;
+    console.log(pass);
+    if(pass == "divineintervention"){
+        console.log("True");
+        res.send("True");
+    }
+    else{
+        console.log("False");
+        res.send("False");
+    }
+});
 
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
