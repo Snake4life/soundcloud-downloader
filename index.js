@@ -35,8 +35,8 @@ app.get('/getSound', function (req, res) {
         dest = dest.replace(dest.split(".mp3")[1], "");
 
         options = {
-            url: album_art,
             dest: __dirname + "/album_art.jpg",
+            url: album_art,
             done: function (err, filename, image) {
                 if (err) {
                     throw err;
