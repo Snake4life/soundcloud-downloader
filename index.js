@@ -60,7 +60,20 @@ app.get('/getSound', function (req, res) {
                 res.download(file);
             },
         };
+
         image_downloader(options);
+
+
+        image_downloader({
+            url: 'http://aprendizorganolo.webcindario.com/imagenes/ico_wikipedia.png',
+            dest: 'image.png',
+            done: function (err, filename, image) {
+                if (err) {
+                    throw err;
+                }
+                console.log('File saved to', filename);
+            },
+        });
     });
 });
 
