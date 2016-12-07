@@ -57,10 +57,11 @@ app.get('/getSound', function (req, res) {
                 fs.writeFileSync(artist + " - " + title + '.mp3', taggedSongBuffer);
 
                 var file = __dirname + "/" + artist + " - " + title + '.mp3';
-                res.download(file);
-                res.send("<script>\
+                res.download(file, function (err) {
+                    res.send("<script>\
                          window.close();\
                          </script>");
+                });
             }
         };
 
