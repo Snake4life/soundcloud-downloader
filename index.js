@@ -92,7 +92,7 @@ APIC (song cover): works with jpeg, png, gif, webp, tiff, bmp and ico
 */
 
 app.use(function(req, res, next) {
-  var allowedOrigins = ['https://revengex-benjoha123.c9users.io', 'http://revengexstorm.com', 'http://www.revengexstorm.com'];
+  var allowedOrigins = ['https://revengex-benjoha123.c9users.io', 'http://revengexstorm.com', 'http://www.revengexstorm.com', 'chrome-extension://hadkalgleneamjcagnipddfcekkocbkg'];
   var origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
        res.setHeader('Access-Control-Allow-Origin', origin);
