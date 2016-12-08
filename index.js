@@ -71,7 +71,7 @@ app.get('/getSound', function (req, res) {
 });
 
 app.get('/files', function (req, res) {
-    fs.readdir('/', (err, files) => {
+    fs.readdir('/app/', (err, files) => {
         files.forEach(file => {
             console.log(file);
         });
