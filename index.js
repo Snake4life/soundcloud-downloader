@@ -56,8 +56,10 @@ app.get('/getSound', function (req, res) {
                 var taggedSongBuffer = new Buffer(writer.arrayBuffer);
                 fs.writeFileSync(artist + " - " + title + '.mp3', taggedSongBuffer);
 
-                var file = __dirname + "/" + artist + " - " + title + '.mp3';
+                var file = (__dirname + "/" + artist + " - " + title + '.mp3');
+                file = file.replace(/[^a-z0-9]/gi, '_').toLowerCase();
                 res.download(file, function (err) {
+                    fs.unlink(file);
                     res.send("<script>\
                          window.close();\
                          </script>");
@@ -69,32 +71,13 @@ app.get('/getSound', function (req, res) {
     });
 });
 
-/*
-array of strings:
-
-TPE1 (song artists)
-TCOM (song composers)
-TCON (song genres)
-
-string
-
-TIT2 (song title)
-TALB (album title)
-TPE2 (album artist)
-TRCK (song number in album): '5' or '5/10'
-TPOS (album disc number): '1' or '1/3'
-USLT (unsychronised lyrics)
-TPUB (label name)
-
-integer
-
-TLEN (song duration in milliseconds)
-TYER (album release year)
-
-arrayBuffer
-
-APIC (song cover): works with jpeg, png, gif, webp, tiff, bmp and ico
-*/
+app.get('/files', function (req, res) {
+    fs.readdir('/', (err, files) => {
+        files.forEach(file => {
+            console.log(file);
+        });
+    });
+});
 
 app.use(function (req, res, next) {
     var allowedOrigins = ['https://revengex-benjoha123.c9users.io', 'http://revengexstorm.com', 'http://www.revengexstorm.com', 'chrome-extension://hadkalgleneamjcagnipddfcekkocbkg'];
