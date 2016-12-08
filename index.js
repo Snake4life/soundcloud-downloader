@@ -57,7 +57,6 @@ app.get('/getSound', function (req, res) {
                 fs.writeFileSync(artist + " - " + title + '.mp3', taggedSongBuffer);
 
                 var file = (__dirname + "/" + artist + " - " + title + '.mp3');
-                file = file.replace(/[^a-z0-9]/gi, '_').toLowerCase();
                 res.download(file, function (err) {
                     fs.unlink(file);
                     res.send("<script>\
@@ -82,7 +81,6 @@ app.get('/files', function (req, res) {
 app.use(function (req, res, next) {
     var allowedOrigins = ['https://revengex-benjoha123.c9users.io', 'http://revengexstorm.com', 'http://www.revengexstorm.com', 'chrome-extension://hadkalgleneamjcagnipddfcekkocbkg'];
     var origin = req.headers.origin;
-    console.log("origin: " + req.headers.origin);
     if (allowedOrigins.indexOf(origin) > -1) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
