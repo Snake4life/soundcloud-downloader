@@ -62,6 +62,7 @@ app.get('/getSound', function (req, res) {
                     res.send("<script>\
                          window.close();\
                          </script>");
+                    res.end();
                 });
             }
         };
