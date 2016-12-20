@@ -59,9 +59,6 @@ app.get('/getSound', function (req, res) {
                 var file = (__dirname + "/" + artist + " - " + title + '.mp3');
                 res.download(file, function (err) {
                     fs.unlink(file);
-                    res.send("<script>\
-                         window.close();\
-                         </script>");
                     res.end();
                 });
             }
