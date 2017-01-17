@@ -28,13 +28,13 @@ app.get('/getSound', function (req, res) {
     var album = query.album;
     var album_art = query.album_art;
 
-    if (isNaN(album_art)) {
+    if (album_art == null) {
         res.end(returnError("Please give an album art"));
         console.log("/getSound :: No album art: " + album_art);
         return;
     }
 
-    if (isNaN(link)) {
+    if (link == null) {
         res.end(returnError("No song link given"));
         console.log("/getSound :: No link to the song: " + link);
         return;
