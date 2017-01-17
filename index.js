@@ -13,12 +13,16 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/getSound', function (req, res) {
     var query = require('url').parse(req.url, true).query;
-    var link = query.link;
-    var artist = query.artist;
-    var title = query.title;
-    var genre = query.genre;
-    var album = query.album;
-    var album_art = query.album_art;
+    var data = JSON.parse(query.data);
+    
+    console.log(query.data);
+    
+    var link = data.link;
+    var artist = data.artist;
+    var title = data.title;
+    var genre = data.genre;
+    var album = data.album;
+    var album_art = data.album_art;
 
     var exePath = path.resolve(__dirname, './youtube-dl');
     console.log("path: " + exePath);
