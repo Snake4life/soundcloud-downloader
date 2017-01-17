@@ -30,13 +30,13 @@ app.get('/getSound', function (req, res) {
 
     if (isNaN(album_art)) {
         res.end(returnError("Please give an album art"));
-        console.log("/getSound :: No album art");
+        console.log("/getSound :: No album art: " + album_art);
         return;
     }
 
     if (isNaN(link)) {
         res.end(returnError("No song link given"));
-        console.log("/getSound :: No link to the song");
+        console.log("/getSound :: No link to the song: " + link);
         return;
     }
 
