@@ -48,6 +48,8 @@ app.get('/getSound', function (req, res) {
     var exePath = path.resolve(__dirname, './youtube-dl');
     console.log("path: " + exePath);
     fs.chmodSync('youtube-dl', 0777);
+    
+    res.write('<h2 style="text-align:center; margin-top:20%">Downloading ' + artist + ' - ' + title + '</h2>');
 
     exec(exePath + " " + link, function (error, stdout, stderr) {
         if (error) {
@@ -65,8 +67,8 @@ app.get('/getSound', function (req, res) {
             url: album_art,
             done: function (err, filename, image) {
                 if (err) {
-                    res.end(returnError(error.message));
-                    console.log("/getSound :: Error getting album art: " + error.message);
+                    res.end(returnError(err.message));
+                    console.log("/getSound :: Error getting album art: " + err.message);
                     return;
                 }
                 console.log('Album cover saved to', filename);
