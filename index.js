@@ -40,10 +40,10 @@ app.get('/getSound', function (req, res) {
         return;
     }
 
-    if (isNaN(artist)) artist = "";
-    if (isNaN(title)) title = "";
-    if (isNaN(genre)) genre = "";
-    if (isNaN(album)) album = "";
+    if (artist == null) artist = "";
+    if (title == null) title = "";
+    if (genre == null) genre = "";
+    if (album == null) album = "";
 
     var exePath = path.resolve(__dirname, './youtube-dl');
     console.log("path: " + exePath);
