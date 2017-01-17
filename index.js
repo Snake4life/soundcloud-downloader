@@ -49,8 +49,6 @@ app.get('/getSound', function (req, res) {
     console.log("path: " + exePath);
     fs.chmodSync('youtube-dl', 0777);
     
-    res.write('<h2 style="text-align:center; margin-top:20%">Downloading ' + artist + ' - ' + title + '</h2>');
-
     exec(exePath + " " + link, function (error, stdout, stderr) {
         if (error) {
             res.end(returnError(error.message));
