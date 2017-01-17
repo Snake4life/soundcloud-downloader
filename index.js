@@ -48,7 +48,7 @@ app.get('/getSound', function (req, res) {
     var exePath = path.resolve(__dirname, './youtube-dl');
     console.log("path: " + exePath);
     fs.chmodSync('youtube-dl', 0777);
-    
+
     exec(exePath + " " + link, function (error, stdout, stderr) {
         if (error) {
             res.end(returnError(error.message));
@@ -84,11 +84,22 @@ app.get('/getSound', function (req, res) {
                 var taggedSongBuffer = new Buffer(writer.arrayBuffer);
                 fs.writeFileSync(artist + " - " + title + '.mp3', taggedSongBuffer);
 
-                var file = (__dirname + "/" + artist + " - " + title + '.mp3');
+                var fileName = (__dirname + "/" + artist + " - " + title + '.mp3');
+
+                var file = fs.createReadStream(fileName);
+                file.on('end', function () {
+                    fs.unlink(fileName, function () {
+                        console.log("file deleted");
+                    });
+                });
+                file.pipe(res);
+
+                /*
                 res.download(file, function (err) {
                     fs.unlink(file);
                     res.end();
                 });
+                */
             }
         };
 
