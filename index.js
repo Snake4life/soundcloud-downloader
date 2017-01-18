@@ -82,10 +82,14 @@ app.get('/getSound', function (req, res) {
                 writer.addTag();
 
                 var taggedSongBuffer = new Buffer(writer.arrayBuffer);
-                fs.writeFileSync(artist + " - " + title + '.mp3', taggedSongBuffer);
+                
+                var fileResultName = (artist + " - " + title).replace(/[\/:?*<>|]/g, '');
+                
+                fs.writeFileSync(fileResultName + '.mp3', taggedSongBuffer);
 
-                var fileName = (__dirname + "/" + artist + " - " + title + '.mp3');
-
+                var fileName = (__dirname + "/" + fileResultName + '.mp3');
+                
+                /*
                 var file = fs.createReadStream(fileName);
                 file.on('end', function () {
                     fs.unlink(fileName, function () {
@@ -93,13 +97,12 @@ app.get('/getSound', function (req, res) {
                     });
                 });
                 file.pipe(res);
+                */
 
-                /*
                 res.download(file, function (err) {
                     fs.unlink(file);
                     res.end();
                 });
-                */
             }
         };
 
