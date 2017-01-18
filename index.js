@@ -106,6 +106,7 @@ app.get('/getSound', function (req, res) {
                         return;
                     } else {
                         fs.unlink(file);
+                        console.log("delete");
                         res.end();
                     }
                 });
