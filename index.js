@@ -82,13 +82,13 @@ app.get('/getSound', function (req, res) {
                 writer.addTag();
 
                 var taggedSongBuffer = new Buffer(writer.arrayBuffer);
-                
+
                 var fileResultName = (artist + " - " + title).replace(/[\/:?*<>|]/g, '');
-                
+
                 fs.writeFileSync(fileResultName + '.mp3', taggedSongBuffer);
 
                 var file = (__dirname + "/" + fileResultName + '.mp3');
-                
+
                 /*
                 var file = fs.createReadStream(fileName);
                 file.on('end', function () {
@@ -99,9 +99,15 @@ app.get('/getSound', function (req, res) {
                 file.pipe(res);
                 */
 
-                res.download(file, function (err) {
-                    fs.unlink(file);
-                    res.end();
+                res.download(file, fileResultName + ".mp3", function (err) {
+                    if (err) {
+                        res.end(returnError(err.message));
+                        console.log("/getSound :: Error downloading file: " + err.message);
+                        return;
+                    } else {
+                        fs.unlink(file);
+                        res.end();
+                    }
                 });
             }
         };
