@@ -87,7 +87,7 @@ app.get('/getSound', function (req, res) {
                 
                 fs.writeFileSync(fileResultName + '.mp3', taggedSongBuffer);
 
-                var fileName = (__dirname + "/" + fileResultName + '.mp3');
+                var file = (__dirname + "/" + fileResultName + '.mp3');
                 
                 /*
                 var file = fs.createReadStream(fileName);
