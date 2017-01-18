@@ -106,7 +106,7 @@ app.get('/getSound', function (req, res) {
                         return;
                     } else {
                         fs.unlink(file);
-                        console.log("delete");
+                        console.log("Tried to delete: " + file);
                         res.end();
                     }
                 });
@@ -115,6 +115,14 @@ app.get('/getSound', function (req, res) {
 
         image_downloader(options);
     });
+});
+
+app.get('/deleteFile', function (req, res) {
+    var query = require('url').parse(req.url, true).query;
+    var file = query.file;
+    
+    fs.unlink(file);
+    res.end();
 });
 
 app.get('/files', function (req, res) {
